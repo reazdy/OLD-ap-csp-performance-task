@@ -1,6 +1,99 @@
 namespace SpriteKind {
     export const obstacle = SpriteKind.create()
 }
+function spriteShorten (value: number, time: number) {
+	
+}
+sprites.onOverlap(SpriteKind.Player, SpriteKind.obstacle, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+    spriteShorten(1, 1)
+    newObstacle = [sprites.create(img`
+        99b....bb9b......................
+        99bb..bb99c......................
+        9b9bccb999c......................
+        93999999b9c......................
+        9399999939c......................
+        9999999939c......................
+        99ff119ff9c.....bbbb.............
+        99ff111ff9c.....9999bb...........
+        9991111199c....c99999b...........
+        99111ff119c...c9911999...........
+        99cc1111cbc...c91d1199...........
+        9999b3cc9bc...cbdbd199...........
+        9999b3c9999bcccbdbb199...........
+        9991119999999999999b99...........
+        991111999999999999999c...........
+        99111119999999999999cc...........
+        99111119999999999999c............
+        b9111111999999999999c............
+        f9111111999999999999c............
+        ff111111999999999999c............
+        ..b11119999911119999c............
+        ..bb1119999111111999c............
+        ..fbffb999cccccccb99c............
+        ..fbf.f99c...fbb.c99c............
+        ..fbf.f99.....fb..c99c...........
+        ..fbf.f99.....fbf.cc9c...........
+        ..fbf.f99.....fbf..c9c...........
+        ..bbf.f99....fff...c9c...........
+        ..bb..999.........c99c...........
+        ..ff..99c.........c99c...........
+        .................................
+        .................................
+        .................................
+        .................................
+        .................................
+        .................................
+        .................................
+        .................................
+        .................................
+        .................................
+        `, SpriteKind.obstacle), sprites.create(img`
+        . . . . . . . c c c . . . . . . 
+        . . . . . . c b 5 c . . . . . . 
+        . . . . c c c 5 5 c c c . . . . 
+        . . c c b c 5 5 5 5 c c c c . . 
+        . c b b 5 b 5 5 5 5 b 5 b b c . 
+        . c b 5 5 b b 5 5 b b 5 5 b c . 
+        . . f 5 5 5 b b b b 5 5 5 c . . 
+        . . f f 5 5 5 5 5 5 5 5 f f . . 
+        . . f f f b f e e f b f f f . . 
+        . . f f f 1 f b b f 1 f f f . . 
+        . . . f f b b b b b b f f . . . 
+        . . . e e f e e e e f e e . . . 
+        . . e b c b 5 b b 5 b f b e . . 
+        . . e e f 5 5 5 5 5 5 f e e . . 
+        . . . . c b 5 5 5 5 b c . . . . 
+        . . . . . f f f f f f . . . . . 
+        `, SpriteKind.obstacle), sprites.create(img`
+        ....e2e2eee2eee2e2e.....
+        .222e2ee2ee2ee2ee2e222..
+        2e22eee22ee2ee22eee22e2c
+        2e2ee2e2eee2eee2e2ee2e26
+        2ee2e2e22ee2ee22e2e2ee2c
+        2e22eee22ee2ee22eee22e2c
+        2e2ee2e22ee2ee22e2ee2e26
+        2ee2e2ee2ee2ee2ee2e2ee2c
+        ee22e2e22ee2ee22e2e22ee6
+        2e22e2e22ee2ee22e2e22e2c
+        2e22e2eec66666cee2e22e26
+        2e2ecc66c64446c66cce2e2c
+        2e2c666c4444444c666c2e26
+        c66c644c6666666c446c66cc
+        444444c444444444c4444444
+        ccccccd666666666dcccccc6
+        e222e41ee44e4e4e14e222e6
+        eddde46feefffe4e64eddde6
+        efdfe46fefffff4e64efdfe6
+        eddde46feeeeeeee64eddde6
+        ecdce46ee44e4e4e64ecdce6
+        6444446ee44e4ffe6444446c
+        ceeee46fe44e4efe64eeeec.
+        .6ee446fe44e4e4e644ee6..
+        `, SpriteKind.obstacle)]._pickRandom()
+    newObstacle.setVelocity(-15, 0)
+    newObstacle.setPosition(150, randint(10, 110))
+})
 let newObstacle: Sprite = null
 game.splash("Avoid the obstacles!")
 scroller.setLayerImage(scroller.BackgroundLayer.Layer0, img`
@@ -128,65 +221,26 @@ scroller.setLayerImage(scroller.BackgroundLayer.Layer0, img`
 scroller.scrollBackgroundWithSpeed(-50, 0)
 let mySprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
-    . . . . 3 3 3 3 3 3 3 3 . . . . 
-    . . . 3 d 3 3 3 3 3 3 c 3 . . . 
-    . . 3 c d 3 3 3 3 3 3 c c 3 . . 
-    . 3 c c d d d d d d 3 c c d 3 d 
-    . 3 c 3 a a a a a a a b c d 3 3 
-    . 3 3 a b b a b b b a a b d 3 3 
-    . 3 a b b b a b b b b a 3 3 3 3 
-    . a a 3 3 3 a 3 3 3 3 3 a 3 3 3 
-    . a a a a a a f a a a f a 3 d d 
-    . a a a a a a f a a f a a a 3 d 
-    . a a a a a a f f f a a a a a a 
-    . a f f f f a a a a f f f a a a 
-    . . f f f f f a a f f f f f a . 
-    . . . f f f . . . . f f f f . . 
     . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . 9 9 9 9 9 9 9 9 9 9 9 9 9 . . 
+    . 9 6 6 6 6 6 6 6 6 6 6 6 9 . . 
+    . 9 6 6 6 b b b b b 6 6 6 9 . . 
+    . 9 6 6 6 b 5 5 5 b 6 6 6 9 . . 
+    . 9 6 6 6 b 5 5 5 b 6 6 6 9 . . 
+    . 9 6 6 6 b b b b b 6 6 6 9 . . 
+    . 9 6 6 6 6 6 6 6 6 6 6 6 9 . . 
+    . 9 6 6 6 6 6 6 6 6 6 6 6 9 . . 
+    . 9 9 9 9 9 9 9 9 9 9 9 9 9 . . 
+    . . . f f f . . . f f f . . . . 
+    . . f b b b f . f b b b f . . . 
+    . . f b b b f . f b b b f . . . 
+    . . . f f f . . . f f f . . . . 
     `, SpriteKind.Player)
-controller.moveSprite(mySprite)
-let obstacleSprites = [sprites.create(img`
-    bbbb........bbbb.................
-    c99bb......bb99b.................
-    c999bb....bb999c.................
-    c9b99bccccb99b9c.................
-    c9bb99bccb99bb9c.................
-    c93b99999999b39c.................
-    c93399999999339c.................
-    c99399999999399c.................
-    c99999991199999c.................
-    c999ff91119ff99c........bbbbbb...
-    c999ff91111ff99c.......c999999bb.
-    c99991111111999c......c99999999b.
-    c9991111fff1199c.....c9991119999b
-    c999c11fff1199bc.....c9911111999b
-    c999cc111111c9bc.....c911dd11199b
-    c99999bb33cc99bcc....cbddbbd1199c
-    c999999b33c99999bbccccbbdbbb1199c
-    c9999999bb9999999999999999bb1999c
-    c999911119999999999999999999b999c
-    c999111111999999999999999999999c.
-    c99911111119999999999999999999cc.
-    c99111111119999999999999999999c..
-    c99111111111999999999999999999c..
-    cb9111111111999999999999999999c..
-    .f9111111111999999999999999999c..
-    .ff111111111999999999999999999c..
-    ..fb11111111999999999999999999c..
-    ...fb1111119999999111111999999c..
-    ...fbbb11119999991111111199999c..
-    ....fbbfffb9999ccccccccccb9999c..
-    ....fbbf..f999c.....fbbf.c9999c..
-    ....fbbf..f999c.....fbbf.cc9999c.
-    ....fbbf..f99c.......fbf..cc999c.
-    ....fbbf..f99c.......fbbf..cc99c.
-    ....fbbf..f99c.......fbbf...c99c.
-    ....fbbf..f99c......fbbbf...c99c.
-    ...fbbbf..f99c......ffff....cb9c.
-    ...fbbf..f999c.............c999c.
-    ...ffff..f99cc.............c999c.
-    .........fffc..............cccc..
-    `, SpriteKind.obstacle), sprites.create(img`
+let train = mySprite
+train.setPosition(10, 70)
+controller.moveSprite(train, 100, 100)
+let first = sprites.create(img`
     . . . . . . . c c c . . . . . . 
     . . . . . . c b 5 c . . . . . . 
     . . . . c c c 5 5 c c c . . . . 
@@ -203,58 +257,6 @@ let obstacleSprites = [sprites.create(img`
     . . e e f 5 5 5 5 5 5 f e e . . 
     . . . . c b 5 5 5 5 b c . . . . 
     . . . . . f f f f f f . . . . . 
-    `, SpriteKind.obstacle), sprites.create(img`
-    ....................e2e22e2e....................
-    .................222eee22e2e222.................
-    ..............222e22e2e22eee22e222..............
-    ...........e22e22eeee2e22e2eeee22e22e...........
-    ........eeee22e22e22e2e22e2e22e22e22eeee........
-    .....222e22e22eeee22e2e22e2e22eeee22e22e222.....
-    ...22eeee22e22e22e22eee22eee22e22e22e22eeee22...
-    4cc22e22e22eeee22e22e2e22e2e22e22eeee22e22e22cc4
-    6c6eee22e22e22e22e22e2e22e2e22e22e22e22e22eee6c6
-    46622e22eeee22e22eeee2e22e2eeee22e22eeee22e22664
-    46622e22e22e22eeee22e2e22e2e22eeee22e22e22e22664
-    4cc22eeee22e22e22e22eee22eee22e22e22e22eeee22cc4
-    6c622e22e22eeee22e22e2e22e2e22e22eeee22e22e226c6
-    466eee22e22e22e22e22e2e22e2e22e22e22e22e22eee664
-    46622e22eeee22e22e22e2e22e2e22e22e22eeee22e22664
-    4cc22e22e22e22e22eeee2e22e2eeee22e22e22e22e22cc4
-    6c622eeee22e22eeee22eee22eee22eeee22e22eeee226c6
-    46622e22e22eeee22e22e2e22e2e22e22eeee22e22e22664
-    466eee22e22e22e22e22e2e22e2e22e22e22e22e22eee664
-    4cc22e22eeee22e22e22e2e22e2e22e22e22eeee22e22cc4
-    6c622e22e22e22e22e22eee22eee22e22e22e22e22e226c6
-    46622eeee22e22e22eeecc6666cceee22e22e22eeee22664
-    46622e22e22e22eeecc6666666666cceee22e22e22e22664
-    4cceee22e22eeecc66666cccccc66666cceee22e22eeecc4
-    6c622e22eeecc66666cc64444446cc66666cceee22e226c6
-    46622e22cc66666cc64444444444446cc66666cc22e22664
-    46622cc6666ccc64444444444444444446ccc6666cc22664
-    4ccc6666ccc6444bcc666666666666ccb4446ccc6666ccc4
-    cccccccc6666666cb44444444444444bc6666666cccccccc
-    64444444444446c444444444444444444c64444444444446
-    66cb444444444cb411111111111111114bc444444444bc66
-    666cccccccccccd166666666666666661dccccccccccc666
-    6666444444444c116eeeeeeeeeeeeee611c4444444446666
-    666e2222222e4c16e4e44e44e44e44ee61c4e2222222e666
-    666eeeeeeeee4c16e4e44e44e44e44ee61c4eeeeeeeee666
-    666eddddddde4c66f4e4effffffe44ee66c4eddddddde666
-    666edffdffde4c66f4effffffffff4ee66c4edffdffde666
-    666edccdccde4c66f4effffffffffeee66c4edccdccde666
-    666eddddddde4c66f4eeeeeeeeeeeeee66c4eddddddde666
-    c66edffdffde4c66e4e44e44e44e44ee66c4edffdffde66c
-    c66edccdccde4c66e4e44e44e44e44ee66c4edccdccde66c
-    cc66666666664c66e4e44e44e44feeee66c46666666666cc
-    .c66444444444c66e4e44e44e44ffffe66c44444444466c.
-    ..c64eee4eee4c66f4e44e44e44f44fe66c4eee4eee46c..
-    ...c4eee4eee4c66f4e44e44e44effee66c4eee4eee4c...
-    ....644444444c66f4e44e44e44e44ee66c444444446....
-    .....64eee444c66f4e44e44e44e44ee66c444eee46.....
-    ......6ccc666c66e4e44e44e44e44ee66c666ccc6......
-    `, SpriteKind.obstacle)]
-game.onUpdateInterval(2000, function () {
-    newObstacle = obstacleSprites._pickRandom()
-    newObstacle.setVelocity(-15, 0)
-    mySprite.setPosition(150, randint(10, 110))
-})
+    `, SpriteKind.obstacle)
+first.setPosition(150, 70)
+first.setVelocity(-15, 0)
