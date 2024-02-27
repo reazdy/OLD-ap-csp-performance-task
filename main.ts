@@ -1,12 +1,76 @@
 namespace SpriteKind {
     export const obstacle = SpriteKind.create()
 }
-function spriteShorten (value: number, time: number) {
-	
+function spriteGrow (points: number, gameTime: number) {
+    if (gameTime > 20000) {
+        foodVX = -50
+        obstacleVX = -30
+    }
+    for (let index = 0; index < points; index++) {
+        list.push(mySprite)
+    }
+}
+function spriteShorten (pointValue: number, time: number) {
+    if (time > 20000) {
+        foodVX = -50
+        obstacleVX = -30
+    }
+    for (let index = 0; index <= pointValue; index++) {
+        list.removeAt(index)
+    }
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.obstacle, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
-    spriteShorten(1, 1)
+    if (otherSprite == sprites.create(img`
+        ....e2e2eee2eee2e2e.....
+        .222e2ee2ee2ee2ee2e222..
+        2e22eee22ee2ee22eee22e2c
+        2e2ee2e2eee2eee2e2ee2e26
+        2ee2e2e22ee2ee22e2e2ee2c
+        2e22eee22ee2ee22eee22e2c
+        2e2ee2e22ee2ee22e2ee2e26
+        2ee2e2ee2ee2ee2ee2e2ee2c
+        ee22e2e22ee2ee22e2e22ee6
+        2e22e2e22ee2ee22e2e22e2c
+        2e22e2eec66666cee2e22e26
+        2e2ecc66c64446c66cce2e2c
+        2e2c666c4444444c666c2e26
+        c66c644c6666666c446c66cc
+        444444c444444444c4444444
+        ccccccd666666666dcccccc6
+        e222e41ee44e4e4e14e222e6
+        eddde46feefffe4e64eddde6
+        efdfe46fefffff4e64efdfe6
+        eddde46feeeeeeee64eddde6
+        ecdce46ee44e4e4e64ecdce6
+        6444446ee44e4ffe6444446c
+        ceeee46fe44e4efe64eeeec.
+        .6ee446fe44e4e4e644ee6..
+        `, SpriteKind.obstacle)) {
+        spritePoints = 3
+    } else if (otherSprite == sprites.create(img`
+        . . . . . . . c c c . . . . . . 
+        . . . . . . c b 5 c . . . . . . 
+        . . . . c c c 5 5 c c c . . . . 
+        . . c c b c 5 5 5 5 c c c c . . 
+        . c b b 5 b 5 5 5 5 b 5 b b c . 
+        . c b 5 5 b b 5 5 b b 5 5 b c . 
+        . . f 5 5 5 b b b b 5 5 5 c . . 
+        . . f f 5 5 5 5 5 5 5 5 f f . . 
+        . . f f f b f e e f b f f f . . 
+        . . f f f 1 f b b f 1 f f f . . 
+        . . . f f b b b b b b f f . . . 
+        . . . e e f e e e e f e e . . . 
+        . . e b c b 5 b b 5 b f b e . . 
+        . . e e f 5 5 5 5 5 5 f e e . . 
+        . . . . c b 5 5 5 5 b c . . . . 
+        . . . . . f f f f f f . . . . . 
+        `, SpriteKind.obstacle)) {
+        spritePoints = 2
+    } else {
+        spritePoints = 1
+    }
+    spriteShorten(spritePoints, game.runtime())
     newObstacle = [sprites.create(img`
         99b....bb9b......................
         99bb..bb99c......................
@@ -91,10 +155,149 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.obstacle, function (sprite, othe
         ceeee46fe44e4efe64eeeec.
         .6ee446fe44e4e4e644ee6..
         `, SpriteKind.obstacle)]._pickRandom()
-    newObstacle.setVelocity(-15, 0)
+    newObstacle.setVelocity(obstacleVX, 0)
     newObstacle.setPosition(150, randint(10, 110))
+    pause(500)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+    if (otherSprite == sprites.create(img`
+        . . . . c c c b b b b b . . . . 
+        . . c c b 4 4 4 4 4 4 b b b . . 
+        . c c 4 4 4 4 4 5 4 4 4 4 b c . 
+        . e 4 4 4 4 4 4 4 4 4 5 4 4 e . 
+        e b 4 5 4 4 5 4 4 4 4 4 4 4 b c 
+        e b 4 4 4 4 4 4 4 4 4 4 5 4 4 e 
+        e b b 4 4 4 4 4 4 4 4 4 4 4 b e 
+        . e b 4 4 4 4 4 5 4 4 4 4 b e . 
+        8 7 e e b 4 4 4 4 4 4 b e e 6 8 
+        8 7 2 e e e e e e e e e e 2 7 8 
+        e 6 6 2 2 2 2 2 2 2 2 2 2 6 c e 
+        e c 6 7 6 6 7 7 7 6 6 7 6 c c e 
+        e b e 8 8 c c 8 8 c c c 8 e b e 
+        e e b e c c e e e e e c e b e e 
+        . e e b b 4 4 4 4 4 4 4 4 e e . 
+        . . . c c c c c e e e e e . . . 
+        `, SpriteKind.Food)) {
+        spritePoints = 3
+    } else if (otherSprite == sprites.create(img`
+        ..............eeeeeee...........
+        ............ee455662e2e.........
+        ..........ee45556723e2688.......
+        .........e46776677232e777668....
+        ........e46745554772227776778...
+        .......4448744444777766777678...
+        ......4522e7777776777766676668..
+        .....4523227766722e666eeeee888..
+        ....455232e76672322e4555dddd48..
+        ...44567777554623e455ddddddddd4.
+        ...e66774554477e455dddd55554dd44
+        ..e46777444677e55dd55555d55dddd4
+        ..e5668677666e5dd555555555555dde
+        .e45544e8776e5d555554555555555de
+        .e554eeee66e5d5555d55555dddd54de
+        .e55ee44fee5d5d555555d5d5dddddde
+        e454eeeefe45d55555555555dd4ddde.
+        e5e4eefffe5d55555555d5555dddde..
+        e5ee4eeff45d555555555555dddde...
+        e5eeeeffe5d55d555d5555d5ddde....
+        e5ffefeee5d55545555555ddd4e.....
+        e5ffffffe545555555d5d4ddee......
+        e54efeff45d55d55555dddde........
+        e5eeeffe5dd5555545dddee.........
+        e4eeefff5d5555d55ddde...........
+        e4efefff5d5d55555d4e............
+        .e4efffe5d555555dee.............
+        .e54eeee5d545dd4e...............
+        ..e554ee5dddddee................
+        ...ee5544dddee..................
+        .....eeeeeee....................
+        ................................
+        `, SpriteKind.Food)) {
+        spritePoints = 2
+    } else {
+        spritePoints = 1
+    }
+    spriteGrow(spritePoints, game.runtime())
+    newFood = [sprites.create(img`
+        . . . . c c c b b b b b . . . . 
+        . . c c b 4 4 4 4 4 4 b b b . . 
+        . c c 4 4 4 4 4 5 4 4 4 4 b c . 
+        . e 4 4 4 4 4 4 4 4 4 5 4 4 e . 
+        e b 4 5 4 4 5 4 4 4 4 4 4 4 b c 
+        e b 4 4 4 4 4 4 4 4 4 4 5 4 4 e 
+        e b b 4 4 4 4 4 4 4 4 4 4 4 b e 
+        . e b 4 4 4 4 4 5 4 4 4 4 b e . 
+        8 7 e e b 4 4 4 4 4 4 b e e 6 8 
+        8 7 2 e e e e e e e e e e 2 7 8 
+        e 6 6 2 2 2 2 2 2 2 2 2 2 6 c e 
+        e c 6 7 6 6 7 7 7 6 6 7 6 c c e 
+        e b e 8 8 c c 8 8 c c c 8 e b e 
+        e e b e c c e e e e e c e b e e 
+        . e e b b 4 4 4 4 4 4 4 4 e e . 
+        . . . c c c c c e e e e e . . . 
+        `, SpriteKind.Food), sprites.create(img`
+        . . . . . . b b b b a a . . . . 
+        . . . . b b d d d 3 3 3 a a . . 
+        . . . b d d d 3 3 3 3 3 3 a a . 
+        . . b d d 3 3 3 3 3 3 3 3 3 a . 
+        . b 3 d 3 3 3 3 3 b 3 3 3 3 a b 
+        . b 3 3 3 3 3 a a 3 3 3 3 3 a b 
+        b 3 3 3 3 3 a a 3 3 3 3 d a 4 b 
+        b 3 3 3 3 b a 3 3 3 3 3 d a 4 b 
+        b 3 3 3 3 3 3 3 3 3 3 d a 4 4 e 
+        a 3 3 3 3 3 3 3 3 3 d a 4 4 4 e 
+        a 3 3 3 3 3 3 3 d d a 4 4 4 e . 
+        a a 3 3 3 d d d a a 4 4 4 e e . 
+        . e a a a a a a 4 4 4 4 e e . . 
+        . . e e b b 4 4 4 4 b e e . . . 
+        . . . e e e e e e e e . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.Food), sprites.create(img`
+        ..............eeeeeee...........
+        ............ee455662e2e.........
+        ..........ee45556723e2688.......
+        .........e46776677232e777668....
+        ........e46745554772227776778...
+        .......4448744444777766777678...
+        ......4522e7777776777766676668..
+        .....4523227766722e666eeeee888..
+        ....455232e76672322e4555dddd48..
+        ...44567777554623e455ddddddddd4.
+        ...e66774554477e455dddd55554dd44
+        ..e46777444677e55dd55555d55dddd4
+        ..e5668677666e5dd555555555555dde
+        .e45544e8776e5d555554555555555de
+        .e554eeee66e5d5555d55555dddd54de
+        .e55ee44fee5d5d555555d5d5dddddde
+        e454eeeefe45d55555555555dd4ddde.
+        e5e4eefffe5d55555555d5555dddde..
+        e5ee4eeff45d555555555555dddde...
+        e5eeeeffe5d55d555d5555d5ddde....
+        e5ffefeee5d55545555555ddd4e.....
+        e5ffffffe545555555d5d4ddee......
+        e54efeff45d55d55555dddde........
+        e5eeeffe5dd5555545dddee.........
+        e4eeefff5d5555d55ddde...........
+        e4efefff5d5d55555d4e............
+        .e4efffe5d555555dee.............
+        .e54eeee5d545dd4e...............
+        ..e554ee5dddddee................
+        ...ee5544dddee..................
+        .....eeeeeee....................
+        ................................
+        `, SpriteKind.Food)]._pickRandom()
+    newFood.setVelocity(foodVX, 0)
+    newFood.setPosition(150, randint(10, 110))
+    pause(500)
+})
+let newFood: Sprite = null
 let newObstacle: Sprite = null
+let spritePoints = 0
+let list: Sprite[] = []
+let foodVX = 0
+let obstacleVX = 0
+let mySprite: Sprite = null
 game.splash("Avoid the obstacles!")
 scroller.setLayerImage(scroller.BackgroundLayer.Layer0, img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -219,7 +422,7 @@ scroller.setLayerImage(scroller.BackgroundLayer.Layer0, img`
     bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
     `)
 scroller.scrollBackgroundWithSpeed(-50, 0)
-let mySprite = sprites.create(img`
+mySprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -238,8 +441,19 @@ let mySprite = sprites.create(img`
     . . . f f f . . . f f f . . . . 
     `, SpriteKind.Player)
 let train = mySprite
-train.setPosition(10, 70)
+train.setPosition(80, 70)
 controller.moveSprite(train, 100, 100)
+train = mySprite
+let trainList: Sprite[] = []
+for (let index = 0; index < 3; index++) {
+    trainList.push(mySprite)
+}
+let start_x = 64
+let start_y = 70
+for (let value of trainList) {
+    value.setPosition(start_x, start_y)
+    start_x += -16
+}
 let first = sprites.create(img`
     . . . . . . . c c c . . . . . . 
     . . . . . . c b 5 c . . . . . . 
@@ -259,4 +473,26 @@ let first = sprites.create(img`
     . . . . . f f f f f f . . . . . 
     `, SpriteKind.obstacle)
 first.setPosition(150, 70)
-first.setVelocity(-15, 0)
+first.setVelocity(-25, 0)
+let firstFood = sprites.create(img`
+    . . . . . . b b b b a a . . . . 
+    . . . . b b d d d 3 3 3 a a . . 
+    . . . b d d d 3 3 3 3 3 3 a a . 
+    . . b d d 3 3 3 3 3 3 3 3 3 a . 
+    . b 3 d 3 3 3 3 3 b 3 3 3 3 a b 
+    . b 3 3 3 3 3 a a 3 3 3 3 3 a b 
+    b 3 3 3 3 3 a a 3 3 3 3 d a 4 b 
+    b 3 3 3 3 b a 3 3 3 3 3 d a 4 b 
+    b 3 3 3 3 3 3 3 3 3 3 d a 4 4 e 
+    a 3 3 3 3 3 3 3 3 3 d a 4 4 4 e 
+    a 3 3 3 3 3 3 3 d d a 4 4 4 e . 
+    a a 3 3 3 d d d a a 4 4 4 e e . 
+    . e a a a a a a 4 4 4 4 e e . . 
+    . . e e b b 4 4 4 4 b e e . . . 
+    . . . e e e e e e e e . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.Food)
+firstFood.setPosition(170, 20)
+firstFood.setVelocity(-40, 0)
+obstacleVX = -15
+foodVX = -40
